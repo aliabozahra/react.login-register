@@ -5,7 +5,7 @@ import Registerpage from "./Pages/Regieter";
 
 export default function App (){
   return(
-    <div className="App col-12  d-flex justify-content-center align-items-center">
+    <div className="App col-12  d-flex ">
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<h1> <Profielpage/></h1>}></Route>

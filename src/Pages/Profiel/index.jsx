@@ -1,11 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Profielpage(){
+    const[isloged,setisloged] =useState(false);
+
     const Navigate = useNavigate()
     useEffect (()=>{
-        let token = sessionStorage.getItem("token")
-        if (token && token ==1234) {
+        let token = localStorage.getItem("token");
+        if (token ) {
+            setisloged(true);
         }
         else{
             Navigate("/login");
@@ -13,11 +16,14 @@ export default function Profielpage(){
 
     },[])
     return(
-        <div className="Profielpage">
+        isloged && (
+            <div className="Profielpage">
             <h1>profirl page </h1>
-            <button onClick={()=>{sessionStorage.clear();
+            <button onClick={()=>{localStorage.removeItem("token");
                Navigate("/login");
             }} className=" btn btn-danger">Logout</button>
         </div>
+        )
+        
     )
 }

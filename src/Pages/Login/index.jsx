@@ -1,4 +1,4 @@
-import { use, useEffect, useRef } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -6,9 +6,14 @@ export default function Loginpage(){
    const useremail  = useRef();    
    const userpassword  = useRef(); 
    const Navigate = useNavigate();
+   const[isopen,setisopen] =useState(false);
    useEffect(()=>{
-    if (localStorage.getItem("emailDp") && localStorage.getItem("passDp")) {
-        
+    if (localStorage.getItem("token")) {
+        setisopen(true);
+        Navigate('/');
+    }
+    else if (localStorage.getItem("emailDp") && localStorage.getItem("passDp")) {
+        setisopen(true);
     }
     else{
         Navigate('/register');
@@ -20,7 +25,8 @@ export default function Loginpage(){
         let email = useremail.current.value;
         let pass = userpassword.current.value;
         if (email==localStorage.getItem("emailDp") && pass==localStorage.getItem("passDp") ) {
-            sessionStorage.setItem("token",1234);
+            let tokenrand = Math.random();
+            localStorage.setItem("token",tokenrand);
             Swal.fire({
                 text:"success Login",
                 icon: "success",
@@ -37,7 +43,8 @@ export default function Loginpage(){
         }
     }
     return(
-        <div className=" col-12 loginpage d-flex justify-content-center align-items-center">
+        isopen && (
+            <div className=" col-12 loginpage d-flex justify-content-center align-items-center">
             <form onSubmit={handelsubmit}  className=" d-flex flex-column shadow border col-12 col-md-8 col-lg-4 gap-3 p-2 bg-white">
                 <input ref={useremail} type="email" placeholder="Enter your email" className=" col-12 form-control" />
                 <input ref={userpassword} type="password" placeholder="Enter your password" className=" col-12 form-control" />
@@ -46,5 +53,7 @@ export default function Loginpage(){
     
             </form>
         </div>
+        )
+      
     )
 }

@@ -5,12 +5,13 @@ export default function Registerpage(){
     const regemail = useRef();
     const regpass = useRef();
     useEffect(()=>{
-        if (localStorage.getItem("emailDp") && localStorage.getItem("passDp")) {
+        if(localStorage.getItem("token")){
+            Navigate('/');
+        }
+      else if (localStorage.getItem("emailDp") && localStorage.getItem("passDp")) {
             Navigate('/login');
         }
-        else{
-        
-        }
+       
     },[])
     
 
